@@ -9,10 +9,16 @@
 class UCameraComponent;
 class USpringArmComponent;
 
+
 UCLASS()
 class ACTIONPLAYGROUND_API ASCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
+protected:
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass;
 
 public:
 	// Sets default values for this character's properties
@@ -21,15 +27,19 @@ public:
 protected:
 
 	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* CameraComponent;
+	USpringArmComponent* SpringArmComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* SpringArmComponent;
+	UCameraComponent* CameraComponent;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	void MoveForward(float Value);
+
+	void MoveRight(float Value);
+
+	void PrimaryAttack();
 
 public:	
 	// Called every frame
