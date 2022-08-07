@@ -34,5 +34,10 @@ void ASExplosiveBarrel::OnComponentHit(UPrimitiveComponent* HitComp, AActor* Oth
 	RadialForceComponent->FireImpulse();
 
 	UE_LOG(LogTemp, Log, TEXT("OnComponentHit reached (ExplosiveBarrel)"));
+
+	UE_LOG(LogTemp, Warning, TEXT("OtherActor: %s, at gate time: %f"), *GetNameSafe(OtherActor), GetWorld()->TimeSeconds);
+
+	FString CombinedString = FString::Printf(TEXT("Hit at location : %s"), *Hit.ImpactPoint.ToString());
+	DrawDebugString(GetWorld(), Hit.ImpactPoint, CombinedString, nullptr, FColor::Green, 2.0f, true);
 }
 
