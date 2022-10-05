@@ -15,8 +15,8 @@ class ACTIONPLAYGROUND_API ASMagicProjectile : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
-
+public:
+	
 	ASMagicProjectile();
 
 protected:
@@ -33,8 +33,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent1, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
