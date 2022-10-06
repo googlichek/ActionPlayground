@@ -31,6 +31,7 @@ ASMagicProjectile::ASMagicProjectile()
 
 // Called when the game starts or when spawned
 void ASMagicProjectile::BeginPlay()
+
 {
 	Super::BeginPlay();
 	
@@ -46,7 +47,7 @@ void ASMagicProjectile::Tick(float DeltaTime)
 void ASMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComponent1, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor)
+	if (OtherActor && OtherActor != GetInstigator())
 	{
 		USAttributeComponent* AttributeComponent =
 			Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));
