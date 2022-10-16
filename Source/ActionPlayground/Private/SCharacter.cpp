@@ -31,6 +31,13 @@ ASCharacter::ASCharacter()
 	bUseControllerRotationYaw = false;
 }
 
+void ASCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	AttributeComponent->OnHealthChanged.AddDynamic(this, &ASCharacter::OnHealthChanged);
+}
+
 // Called when the game starts or when spawned
 void ASCharacter::BeginPlay()
 {
@@ -191,4 +198,14 @@ void ASCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
 void ASCharacter::PrimaryInteract()
 {
 	InteractionComponent->PrimaryInteract();
+}
+
+void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComponent, float NewHealth,
+	float Delta)
+{
+	if (NewHealth <= 0.0f && Delta < 0.0f)
+	{
+		APlayerController* PlayerController = Cast<APlayerController>(GetController());
+		DisableInput(PlayerController);
+	}
 }
