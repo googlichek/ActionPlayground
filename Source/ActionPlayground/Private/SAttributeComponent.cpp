@@ -7,6 +7,7 @@
 USAttributeComponent::USAttributeComponent()
 {
 	Health = 100;
+	HealthMax = 100;
 }
 
 bool USAttributeComponent::IsAlive() const
@@ -14,12 +15,25 @@ bool USAttributeComponent::IsAlive() const
 	return Health > 0.0f;
 }
 
-bool USAttributeComponent::ApplyHealthChange(float Delta)
+bool USAttributeComponent::IsFullHealth() const
 {
-	Health += Delta;
-
-	OnHealthChanged.Broadcast(nullptr, this, Health, Delta);
-
-	return true;
+	return Health == HealthMax;
 }
 
+
+float USAttributeComponent::GetHealthMax() const
+{
+	return HealthMax;
+}
+
+bool USAttributeComponent::ApplyHealthChange(float Delta)
+{
+	float OldHealth = Health;
+
+	Health = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
+
+	float ActualDelta = Health - OldHealth;
+	OnHealthChanged.Broadcast(nullptr, this, Health, ActualDelta); // @fixme: Still nullptr for InstigatorActor parameter
+
+	return ActualDelta != 0;
+}

@@ -8,6 +8,7 @@
 #include "SAttributeComponent.h"
 #include "SInteractionComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ASCharacter::ASCharacter()
@@ -29,6 +30,10 @@ ASCharacter::ASCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	bUseControllerRotationYaw = false;
+
+	AttackAnimationDelay = 0.2f;
+	TimeToHitParamName = "TimeToHit";
+	HandSocketName = "Muzzle_01";
 }
 
 void ASCharacter::PostInitializeComponents()
@@ -148,6 +153,13 @@ void ASCharacter::Dash()
 void ASCharacter::Dash_TimeElapsed()
 {
 	SpawnProjectile(DashProjectileClass);
+}
+
+void ASCharacter::StartAttackEffects()
+{
+	PlayAnimMontage(AttackAnimation);
+
+	UGameplayStatics::SpawnEmitterAttached(CastingEffect, GetMesh(), HandSocketName, FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget);
 }
 
 

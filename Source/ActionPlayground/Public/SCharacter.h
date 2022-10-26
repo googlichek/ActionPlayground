@@ -9,6 +9,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class USInteractionComponent;
+class UAnimMontage;
 class USAttributeComponent;
 class UAnimMontage;
 
@@ -23,6 +24,13 @@ public:
 	ASCharacter();
 
 protected:
+
+	/* VisibleAnywhere = read-only, still useful to view in-editor and enforce a convention. */
+	UPROPERTY(VisibleAnywhere, Category = "Effects")
+	FName TimeToHitParamName;
+
+	UPROPERTY(VisibleAnywhere, Category = "Effects")
+	FName HandSocketName;
 
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComponent;
@@ -47,6 +55,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* AttackAnimation;
+
+	/* Particle System played during attack animation */
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UParticleSystem* CastingEffect;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Attack")
 	float AttackAnimationDelay;
@@ -73,6 +85,8 @@ protected:
 	void Dash();
 
 	void Dash_TimeElapsed();
+
+	void StartAttackEffects();
 
 	// Re-use spawn logic between attacks
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
