@@ -28,12 +28,25 @@ void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryIn
 		return;
 	}
 
+ 	TArray<FVector> Locations = QueryInstance->GetResultsAsLocations();
+
+	if (Locations.Num() > 0)
+	{
+		GetWorld()->SpawnActor<AActor>(MinionClass, Locations[0], FRotator::ZeroRotator);
+
+		// Track all the used spawn locations
+		DrawDebugSphere(GetWorld(), Locations[0], 50.0f, 20, FColor::Blue, false, 60.0f);
+	}
+}
+
+void ASGameModeBase::SpawnBotTimerElapsed()
+{
 	int32 NumberOfAliveBots = 0;
 	for (TActorIterator<ASAICharacter> Iterator(GetWorld()); Iterator; ++Iterator)
 	{
 		ASAICharacter* Bot = *Iterator;
-		USAttributeComponent* AttributeComponent = Cast<USAttributeComponent>(Bot->GetComponentByClass(USAttributeComponent::StaticClass()));
-		if (AttributeComponent && AttributeComponent->IsAlive())
+		const USAttributeComponent* AttributeComponent = Cast<USAttributeComponent>(Bot->GetComponentByClass(USAttributeComponent::StaticClass()));
+		if (ensure(AttributeComponent) && AttributeComponent->IsAlive())
 		{
 			NumberOfAliveBots++;
 		}
@@ -46,22 +59,13 @@ void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryIn
 		DifficultyCurve->GetFloatValue(GetWorld()->TimeSeconds);
 	}
 
-	
+
 	if (NumberOfAliveBots >= MaxBotCount)
 	{
+		UE_LOG(LogTemp, Log, TEXT("At maximum bot capacity. Skipping bot spawn."));
 		return;
 	}
 
-	TArray<FVector> Locations = QueryInstance->GetResultsAsLocations();
-
-	if (Locations.Num() > 0)
-	{
-		GetWorld()->SpawnActor<AActor>(MinionClass, Locations[0], FRotator::ZeroRotator);
-	}
-}
-
-void ASGameModeBase::SpawnBotTimerElapsed()
-{
 	UEnvQueryInstanceBlueprintWrapper* QueryInstance = UEnvQueryManager::RunEQSQuery(this, SpawnBotQuery, this, EEnvQueryRunMode::RandomBest5Pct, nullptr);
 
 	if (ensure(QueryInstance))
