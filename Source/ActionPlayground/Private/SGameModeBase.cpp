@@ -19,8 +19,21 @@ void ASGameModeBase::StartPlay()
 	GetWorldTimerManager().SetTimer(TImerHandle_SpawnBots, this, &ASGameModeBase::SpawnBotTimerElapsed, SpawnTimerInterval, true);
 }
 
+void ASGameModeBase::KillAll()
+{
+	for (TActorIterator<ASAICharacter> Iterator(GetWorld()); Iterator; ++Iterator)
+	{
+		ASAICharacter* Bot = *Iterator;
+		USAttributeComponent* AttributeComponent = USAttributeComponent::GetAttributes(Bot);
+		if (ensure(AttributeComponent) && AttributeComponent->IsAlive())
+		{
+			AttributeComponent->Kill(this);
+		}
+	}
+}
+
 void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance,
-	EEnvQueryStatus::Type QueryStatus)
+                                      EEnvQueryStatus::Type QueryStatus)
 {
 	if (QueryStatus != EEnvQueryStatus::Success)
 	{

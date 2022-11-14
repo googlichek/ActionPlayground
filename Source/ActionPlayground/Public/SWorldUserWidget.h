@@ -16,13 +16,6 @@ class ACTIONPLAYGROUND_API USWorldUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-protected:
-
-	UPROPERTY(meta = (BindWidget))
-	USizeBox* ParentSizeBox;
-
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
 public:
 
 	UPROPERTY(EditAnywhere, Category = "UI")
@@ -30,4 +23,11 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	AActor* AttachedActor;
+
+protected:
+
+	UPROPERTY(meta = (BindWidget))
+	USizeBox* ParentSizeBox;
+
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 };
