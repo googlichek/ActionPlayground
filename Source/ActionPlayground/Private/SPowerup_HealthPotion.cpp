@@ -20,7 +20,7 @@ void ASPowerup_HealthPotion::Interact_Implementation(APawn* InstigatorPawn)
 		return;
 	}
 
-	USAttributeComponent* AttributeComponent = Cast<USAttributeComponent>(InstigatorPawn->GetComponentByClass(USAttributeComponent::StaticClass()));
+	USAttributeComponent* AttributeComponent = USAttributeComponent::GetAttributes(InstigatorPawn);
 	// Check if not already at max health
 	if (ensure(AttributeComponent) && !AttributeComponent->IsFullHealth())
 	{

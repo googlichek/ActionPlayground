@@ -14,7 +14,7 @@ USAttributeComponent* USAttributeComponent::GetAttributes(AActor* FromActor)
 {
 	if (FromActor)
 	{
-		return Cast<USAttributeComponent>(FromActor->GetComponentByClass(USAttributeComponent::StaticClass()));
+		return Cast<USAttributeComponent>(FromActor->GetComponentByClass(StaticClass()));
 	}
 
 	return nullptr;
@@ -46,6 +46,11 @@ bool USAttributeComponent::IsFullHealth() const
 	return Health == HealthMax;
 }
 
+float USAttributeComponent::GetHealth() const
+{
+	return Health;
+}
+
 
 float USAttributeComponent::GetHealthMax() const
 {
@@ -54,7 +59,7 @@ float USAttributeComponent::GetHealthMax() const
 
 bool USAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Delta)
 {
-	if (GetOwner()->CanBeDamaged())
+	if (!GetOwner()->CanBeDamaged())
 		return false;
 
 	float OldHealth = Health;
