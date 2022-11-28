@@ -23,10 +23,12 @@ public:
 
 	ASGameModeBase();
 
-	virtual void StartPlay() override;
-
 	UFUNCTION(Exec)
 	void KillAll();
+
+	virtual void StartPlay() override;
+
+	virtual void OnActorKilled(AActor* VictimActor, AActor* Killer);
 
 protected:
 
@@ -49,4 +51,7 @@ protected:
 
 	UFUNCTION() 
 	void SpawnBotTimerElapsed();
+
+	UFUNCTION()
+	void RespawnPlayerElapsed(AController* Controller);
 };
