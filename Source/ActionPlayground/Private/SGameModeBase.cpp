@@ -7,6 +7,10 @@
 #include "SCharacter.h"
 #include "AI/SAICharacter.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
+#include "EnvironmentQuery/EnvQueryInstanceBlueprintWrapper.h"
+
+static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("su.SpawnBots"), true, TEXT("Enable spawning the bots via timer."), ECVF_Cheat);
 
 ASGameModeBase::ASGameModeBase()
 {
@@ -72,6 +76,12 @@ void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryIn
 
 void ASGameModeBase::SpawnBotTimerElapsed()
 {
+	if (!CVarSpawnBots.GetValueOnGameThread())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Bot spawning disabled via cvar 'CVarSpawnBots'."));
+		return;
+	}
+
 	int32 NumberOfAliveBots = 0;
 	for (TActorIterator<ASAICharacter> Iterator(GetWorld()); Iterator; ++Iterator)
 	{
