@@ -43,6 +43,11 @@ void ASCharacter::PostInitializeComponents()
 	AttributeComponent->OnHealthChanged.AddDynamic(this, &ASCharacter::OnHealthChanged);
 }
 
+FVector ASCharacter::GetPawnViewLocation() const
+{
+	return CameraComponent->GetComponentLocation();
+}
+
 // Called when the game starts or when spawned
 void ASCharacter::BeginPlay()
 {

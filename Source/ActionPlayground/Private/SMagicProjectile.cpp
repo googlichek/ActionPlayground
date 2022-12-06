@@ -3,6 +3,7 @@
 
 #include "SMagicProjectile.h"
 #include "SAttributeComponent.h"
+#include "SGameplayFunctionLibrary.h"
 #include "Components/SphereComponent.h"
 
 
@@ -18,13 +19,18 @@ void ASMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 	if (OtherActor && OtherActor != GetInstigator())
 	{
-		USAttributeComponent* AttributeComponent = Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));
-		if (AttributeComponent)
-		{
-			// minus in front of DamageAmount to apply the change as damage, not healing
-			AttributeComponent->ApplyHealthChange(GetInstigator(), -DamageAmount);
+		//USAttributeComponent* AttributeComponent = Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));
+		//if (AttributeComponent)
+		//{
+		//	// minus in front of DamageAmount to apply the change as damage, not healing
+		//	AttributeComponent->ApplyHealthChange(GetInstigator(), -DamageAmount);
 
-			// Only explode when we hit something valid
+		//	// Only explode when we hit something valid
+		//	Explode();
+		//}
+
+		if (USGameplayFunctionLibrary::ApplyDirectionalDamage(GetInstigator(), OtherActor, DamageAmount, SweepResult))
+		{
 			Explode();
 		}
 	}
