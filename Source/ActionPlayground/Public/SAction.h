@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "SAction.generated.h"
 
+class UWorld;
+
 /**
  * 
  */
@@ -23,4 +25,6 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Action")
 	void StopAction(AActor* Instigator);
+
+	virtual UWorld* GetWorld() const override;
 };
