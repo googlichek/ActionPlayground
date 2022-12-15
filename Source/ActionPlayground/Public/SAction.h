@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "SAction.generated.h"
 
 class UWorld;
+class USActionComponent;
 
 /**
  * 
@@ -26,5 +28,24 @@ public:
 	UFUNCTION(BlueprintNativeEvent, Category = "Action")
 	void StopAction(AActor* Instigator);
 
+	UFUNCTION(BlueprintNativeEvent, Category = "Action")
+	bool CanStart(AActor* Instigator);
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	bool IsRunning() const;
+
 	virtual UWorld* GetWorld() const override;
+
+protected:
+
+	UPROPERTY(EditAnywhere, Category = "Tags")
+	FGameplayTagContainer GrantsTags;
+
+	UPROPERTY(EditAnywhere, Category = "Tags")
+	FGameplayTagContainer BlockedTags;
+
+	bool bIsRunning;
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	USActionComponent* GetOwningComponent() const;
 };
