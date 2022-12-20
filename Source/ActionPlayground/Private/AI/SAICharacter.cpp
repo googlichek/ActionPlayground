@@ -19,6 +19,8 @@ ASAICharacter::ASAICharacter()
 
 	AttributeComponent = CreateDefaultSubobject<USAttributeComponent>("Attribute Component");
 
+	ActionComponent = CreateDefaultSubobject<USActionComponent>("Action Component");
+
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Ignore);
