@@ -18,7 +18,7 @@ void USActionComponent::BeginPlay()
 
 	for (TSubclassOf<USAction> ActionClass : DefaultActions)
 	{
-		AddAction(GetOwner(), ActionClass); 
+		AddAction(GetOwner(), ActionClass);
 	}
 }
 
@@ -51,9 +51,10 @@ void USActionComponent::AddAction(AActor* Instigator, TSubclassOf<USAction> Acti
 	}
 }
 
+
 void USActionComponent::RemoveAction(USAction* ActionToRemove)
 {
-	if (ensure(ActionToRemove && !ActionToRemove->IsRunning()))
+	if (!ensure(ActionToRemove && !ActionToRemove->IsRunning()))
 	{
 		return;
 	}

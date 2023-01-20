@@ -2,10 +2,12 @@
 
 
 #include "SMagicProjectile.h"
+#include "SAttributeComponent.h"
 #include "Components/SphereComponent.h"
 #include "SGameplayFunctionLibrary.h"
 #include "SActionComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "SActionEffect.h"
 
 
 ASMagicProjectile::ASMagicProjectile()

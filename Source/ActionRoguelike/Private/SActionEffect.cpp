@@ -5,6 +5,8 @@
 #include "SActionComponent.h"
 
 
+
+
 USActionEffect::USActionEffect()
 {
 	bAutoStart = true;

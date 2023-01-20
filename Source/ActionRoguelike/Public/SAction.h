@@ -8,7 +8,6 @@
 #include "SAction.generated.h"
 
 class UWorld;
-class USActionComponent;
 
 /**
  * 
@@ -35,6 +34,7 @@ protected:
 	
 public:
 
+	/* Start immediately when added to an action component */
 	UPROPERTY(EditDefaultsOnly, Category = "Action")
 	bool bAutoStart;
 

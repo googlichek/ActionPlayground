@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "GameplayTagContainer.h"
-#include "SActionEffect.h"
 #include "SActionComponent.generated.h"
 
 class USAction;
@@ -30,7 +29,7 @@ public:
 	bool StartActionByName(AActor* Instigator, FName ActionName);
 
 	UFUNCTION(BlueprintCallable, Category = "Actions")
-	bool StopActionByName(AActor* Instigator, FName ActionName);	
+	bool StopActionByName(AActor* Instigator, FName ActionName);
 
 	USActionComponent();
 
